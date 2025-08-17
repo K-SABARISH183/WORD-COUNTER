@@ -1,2 +1,2 @@
 # WORD-COUNTER
-This project involves the development of a Word Count in Java, designed to analyze text by counting total words, calculating average word length, identifying the longest and shortest words, and determining word frequency, character count, and line count.
+This Java AWT application reads a user-entered sentence and generates a frequency report of all unique words. It uses a GUI interface to analyze, sort, and display the word counts in a readable format.
