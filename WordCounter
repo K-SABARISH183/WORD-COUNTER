@@ -1,0 +1,95 @@
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+public class WordCounter extends Frame {
+private TextArea inputArea;
+private Button analyzeButton, clearButton;
+private TextArea outputArea;
+private Label resultCountLabel;
+public PutEffort() {
+// Frame settings
+setTitle("Word Counter");
+setSize(700, 500);
+setLayout(new BorderLayout());
+setResizable(true);
+// Input Panel
+Panel inputPanel = new Panel(new BorderLayout());
+inputPanel.setBackground(Color.LIGHT_GRAY);
+Label inputLabel = new Label("Enter your sentence below:");
+inputLabel.setFont(new Font("Arial", Font.BOLD, 14));
+inputArea = new TextArea("", 5, 50);
+inputArea.setFont(new Font("Arial", Font.PLAIN, 14));
+inputPanel.add(inputLabel, BorderLayout.NORTH);
+inputPanel.add(inputArea, BorderLayout.CENTER);
+// Button Panel
+Panel buttonPanel = new Panel(new FlowLayout());
+analyzeButton = new Button("Analyze");
+clearButton = new Button("Clear");
+analyzeButton.setFont(new Font("Arial", Font.BOLD, 12));
+clearButton.setFont(new Font("Arial", Font.BOLD, 12));
+buttonPanel.add(analyzeButton);
+buttonPanel.add(clearButton);
+// Output Panel
+Panel outputPanel = new Panel(new BorderLayout());
+outputPanel.setBackground(Color.WHITE);
+Label outputLabel = new Label("Word Frequency Report:");
+outputLabel.setFont(new Font("Arial", Font.BOLD, 14));
+outputArea = new TextArea("", 10, 50);
+outputArea.setFont(new Font("Courier New", Font.PLAIN, 14));
+outputArea.setEditable(false);
+resultCountLabel = new Label("");
+resultCountLabel.setFont(new Font("Arial", Font.ITALIC, 12));
+outputPanel.add(outputLabel, BorderLayout.NORTH);
+outputPanel.add(outputArea, BorderLayout.CENTER);
+outputPanel.add(resultCountLabel, BorderLayout.SOUTH);
+// Add components to frame
+add(inputPanel, BorderLayout.NORTH);
+add(buttonPanel, BorderLayout.CENTER);
+add(outputPanel, BorderLayout.SOUTH);
+// Event Listeners
+analyzeButton.addActionListener(new AnalyzeButtonListener());
+clearButton.addActionListener(e -> {
+inputArea.setText("");
+outputArea.setText("");
+resultCountLabel.setText("");
+});
+// Window Closing Event
+addWindowListener(new WindowAdapter() {
+public void windowClosing(WindowEvent e) {
+dispose();
+}
+});
+setVisible(true);
+}
+private class AnalyzeButtonListener implements ActionListener {
+public void actionPerformed(ActionEvent e) {
+String input = inputArea.getText();
+// Normalize the input: remove punctuation, convert to lowercase
+input = input.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+String[] words = input.split("\\s+");
+// Count word frequencies
+Map<String, Integer> wordFrequency = new HashMap<>();
+for (String word : words) {
+if (!word.isEmpty()) {
+wordFrequency.put(word, wordFrequency.getOrDefault(word, 0) + 1);
+}
+}
+// Sort the word frequencies alphabetically
+TreeMap<String, Integer> sortedWordFrequency = new TreeMap<>(wordFrequency);
+// Display the frequency report
+StringBuilder report = new StringBuilder();
+sortedWordFrequency.forEach((word, count) ->
+report.append(String.format("%-15s : %d%n", word, count))
+		);
+		outputArea.setText(report.toString());
+		// Display the count of unique words
+		resultCountLabel.setText("Total Unique Words: " + sortedWordFrequency.size());
+		}
+		}
+		public static void main(String[] args) {
+		new PutEffort();
+		}
+		}
