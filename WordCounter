@@ -9,7 +9,7 @@ private TextArea inputArea;
 private Button analyzeButton, clearButton;
 private TextArea outputArea;
 private Label resultCountLabel;
-public PutEffort() {
+public  WordCounter() {
 // Frame settings
 setTitle("Word Counter");
 setSize(700, 500);
@@ -90,6 +90,6 @@ report.append(String.format("%-15s : %d%n", word, count))
 		}
 		}
 		public static void main(String[] args) {
-		new PutEffort();
+		new  WordCounter();
 		}
 		}
